@@ -1,0 +1,23 @@
+name: H01a PoC
+on:
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]
+
+jobs:
+  claude-code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run Claude Code Action
+        uses: nirvagold/h01a-sandbox@main
+        with:
+          claude_code_version: "2.1.198"
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_BASE_URL: "https://api.anthropic.com"
+          ALLOWED_TOOLS: "Bash(echo*)"
+          CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: "1"
+          DISABLE_TELEMETRY: "1"
+          DISABLE_ERROR_REPORTING: "1"
